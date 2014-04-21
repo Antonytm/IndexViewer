@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using Lucene.Net;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
-using Lucene.Net.Store;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.LuceneProvider;
 using Sitecore.Diagnostics;
+using Directory = Lucene.Net.Store.Directory;
 
 namespace IndexViewer.sitecore_modules.Shell.IndexViewer.Logic.Index
 {
@@ -49,7 +51,7 @@ namespace IndexViewer.sitecore_modules.Shell.IndexViewer.Logic.Index
 
         private Lucene.Net.Index.IndexReader CreateReader()
         {
-            return DirectoryReader.Open(((LuceneIndex)_searchIndex).Directory, true);
+            return ((LuceneIndex)_searchIndex).CreateReader(LuceneIndexAccess.ReadOnly);
         }
 
         public Lucene.Net.Search.IndexSearcher CreateSearcher()
